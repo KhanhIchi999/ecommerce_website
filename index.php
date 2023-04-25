@@ -1,3 +1,9 @@
+<?php
+    // connect to database
+     include './includes/connectDB.php';
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +27,8 @@
 <body>
 
     <div class="container-fluid px-0">
+
+        <!-- header navbar session -->
         <nav class="navbar navbar-expand-lg navbar-light bg-info">
             <a class="navbar-brand" href="#"><img src="./images/logo-vilas.png" alt=""></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -56,6 +64,7 @@
             </div>
         </nav>
 
+        <!-- welcome user session -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -67,12 +76,14 @@
             </ul>
         </nav>
 
+        <!-- title page -->
         <div>
             <h3 class="text-center">Villas Store</h3>
             <p class="text-center">Sells for passion</p>
 
         </div>
 
+        <!-- main page -->
         <div class="row">
             <div class="col-md-10">
                 <div class="row">
@@ -131,30 +142,87 @@
             <div class="col-md-2">
                 <div class="card bg-secondary">
                     <div class="card-body">
-                        <h5 class="card-title text-light">Category</h5>
+                        <h5 class="card-title text-light">Categories</h5>
                         <ul class="list-group">
-                            <li class="list-group-item">Category 1</li>
-                            <li class="list-group-item">Category 2</li>
-                            <li class="list-group-item">Category 3</li>
+                            <?php
+
+                               // select all data from the categories table
+                                $sql = "SELECT * FROM categories";
+                                $result = mysqli_query($conn, $sql);
+
+                                // check if there are any rows returned
+                                if (mysqli_num_rows($result) > 0) {
+                                     // output data of each row
+                                     while($row_data = mysqli_fetch_assoc($result)) {
+
+                                        $category_name = $row_data["category_name"];
+                                        $category_id = $row_data["category_id"];
+
+                                      echo '<li class="list-group-item text-center">
+                                            <a href="index.php?category=' . $category_id . '" class="text-dark d-block text-decoration-none">
+                                                <span class="d-block">' . $category_name . '</span>
+                                            </a>
+                                        </li>';
+
+                                    }
+                                } else {
+                                    echo '<li class="list-group-item text-center">No categories found</li>';
+                                }
+
+                            ?>
                         </ul>
                         <h5 class="card-title mt-3 text-light">Brand</h5>
                         <ul class="list-group">
-                            <li class="list-group-item">Brand 1</li>
-                            <li class="list-group-item">Brand 2</li>
-                            <li class="list-group-item">Brand 3</li>
+                            <?php
+
+                                // select all data from the brands table
+                                $sql = "SELECT * FROM brands";
+                                $result = mysqli_query($conn, $sql);
+
+                                // check if there are any rows returned
+                                if (mysqli_num_rows($result) > 0) {
+                                    // output data of each row
+                                    while($row_data = mysqli_fetch_assoc($result)) {
+
+                                        $brand_name = $row_data["brand_name"];
+                                        $brand_id = $row_data["brand_id"];
+
+                                      echo '<li class="list-group-item text-center">
+                                            <a href="index.php?brand=' . $brand_id . '" class="text-dark d-block text-decoration-none">
+                                                <span class="d-block">' . $brand_name . '</span>
+                                            </a>
+                                        </li>';
+
+                                    }
+                                } else {
+                                    echo '<li class="list-group-item text-center">No brands found</li>';
+                                }
+
+                            ?>
                         </ul>
                     </div>
                 </div>
             </div>v>
         </div>
+
+
+        <!-- footer -->
+
+
+
     </div>
 
 
 
 
-    </div>
+    
 
 
+
+    <?php
+    // close connect to database
+    mysqli_close($conn);
+    ?>
 
 
 
