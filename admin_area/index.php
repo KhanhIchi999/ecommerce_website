@@ -60,7 +60,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item text-center">
-                                <a class="nav-link custom-btn" href="#">Insert Products</a>
+                                <a class="nav-link custom-btn" href="insert_product.php">Insert Products</a>
                             </li>
                             <li class="nav-item text-center">
                                 <a class="nav-link custom-btn" href="#">View Products</a>
