@@ -43,7 +43,7 @@
                         <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="display_all.php">Products</a>
+                        <a class="nav-link" href="#">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Register</a>
@@ -58,7 +58,7 @@
                         <a class="nav-link" href="#">Total Price</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0" method="GET" action="search_product.php">
+                <form class="form-inline my-2 my-lg-0" method="GET" action="">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='search_data'>
                     <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
                 </form>
@@ -90,10 +90,17 @@
                 <div class="row">
 
                     <?php
-                        // calling funciton from funtions/common_function.php
-                        getProducts(2);
-                        getUniqueCategory();
-                        getUniqueBrand();
+
+                        if(isset($_GET['search_data'])) {
+                            $searchValue = $_GET['search_data'];
+                            searchProduct($searchValue);
+                        }else{
+                            // calling funciton from funtions/common_function.php
+                            getProducts(2);
+                            getUniqueCategory();
+                            getUniqueBrand();
+                        }
+
                     ?>
 
                 </div>
@@ -124,11 +131,7 @@
 
 
         <!-- footer -->
-        <?php
-            
-            include 'includes/footer.php';
 
-        ?>
 
 
     </div>

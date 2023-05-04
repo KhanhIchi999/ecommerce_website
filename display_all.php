@@ -91,7 +91,7 @@
 
                     <?php
                         // calling funciton from funtions/common_function.php
-                        getProducts(2);
+                        getProducts('all');
                         getUniqueCategory();
                         getUniqueBrand();
                     ?>
@@ -126,9 +126,10 @@
         <!-- footer -->
         <?php
             
-            include 'includes/footer.php';
+            include './includes/footer.php';
 
         ?>
+
 
 
     </div>

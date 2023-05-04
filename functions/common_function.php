@@ -4,7 +4,7 @@
     include "./includes/connectDB.php";
     
     // getting products
-    function getProducts() {
+    function getProducts($product_number) {
 
         //use global to get $conn variable connect from ./includes/connectDB.php
         global $conn;
@@ -17,8 +17,11 @@
             
 
             // select all data from the products table and the data will random 
-            //becasuse i don't want user see the same result when user visit page and page will show 6 products
-            $sql = "SELECT * FROM products order by rand() limit 0,6";
+            //becasuse i don't want user see the same result when user visit page and page will show  $product_number products
+            $sql = "SELECT * FROM products order by rand() limit 0, $product_number";
+            if(strtolower($product_number) == 'all') {
+                $sql = "SELECT * FROM products order by rand()";
+            }
             $result = mysqli_query($conn, $sql);
 
             // check if there are any rows returned
@@ -215,6 +218,51 @@
             echo '<li class="list-group-item text-center">No categories found</li>';
         }
 
+    }
+
+    // searching product
+    function searchProduct($searchValue) {
+
+        //use global to get $conn variable connect from ./includes/connectDB.php
+        global $conn;
+
+        // select all data from the products table
+        $sql = "SELECT * FROM products WHERE product_name LIKE '%$searchValue%'";
+        $result = mysqli_query($conn, $sql);
+
+        // check if there are any rows returned
+        if (mysqli_num_rows($result) > 0) {
+
+            // output data of each row
+            while($row_data = mysqli_fetch_assoc($result)) {
+
+                $product_id = $row_data["product_id"];
+                $product_name = $row_data["product_name"];
+                $product_description = $row_data["product_description"];
+                $product_price = $row_data["product_price"];
+                $product_image = $row_data["product_image"];
+                $category_id = $row_data["category_id"];
+                $brand_id = $row_data["brand_id"];
+
+                
+                echo '<div class="col-md-4">
+                        <div class="card mb-4">
+                            <img src="./admin_area/'.$product_image.'" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">' . $product_name .'</h5>
+                                <p class="card-text">'. $product_description .'</p>
+                                <a href="#" class="btn btn-primary">Add to cart</a>
+                                <a href="#" class="btn btn-secondary">View more</a>
+                            </div>
+                        </div>
+                    </div>';
+
+            }
+        } else {
+            echo 'No products found';
+        }
+
+       
     }
 
 ?>
