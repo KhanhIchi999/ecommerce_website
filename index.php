@@ -92,6 +92,8 @@
                     <?php
                         // calling funciton from funtions/common_function.php
                         getProducts();
+                        getUniqueCategory();
+                        getUniqueBrand();
                     ?>
 
                 </div>
@@ -117,7 +119,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>v>
+            </div>
         </div>
 
 
