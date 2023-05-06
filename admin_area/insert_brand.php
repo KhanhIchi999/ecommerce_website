@@ -16,7 +16,8 @@
 
         if (mysqli_num_rows($result_check) > 0) {
           echo "<script>alert('brand name already exists!')</script>";
-          header('Refresh: 1; index.php');
+          echo "<script>window.open('index.php', '_self')</script>";
+          // header('Refresh: 1; index.php');
         } else {
           // Insert new brand into database
           $sql = "INSERT INTO brands (brand_name) VALUES ('$brand_name')";

@@ -52,10 +52,10 @@
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i><sup><?php cartItem()?></sup></a>
+                        <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i><sup>1</sup></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Total Price: <?php total_cart_price()?> $</a>
+                        <a class="nav-link" href="#">Total Price</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" method="GET" action="search_product.php">
@@ -64,11 +64,6 @@
                 </form>
             </div>
         </nav>
-
-        <?php
-            // calling cart funtion from funtions/common_function.php
-            cart();
-        ?>
 
         <!-- welcome user session -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -96,9 +91,10 @@
 
                     <?php
                         // calling funciton from funtions/common_function.php
-                        getProducts(2);
-                        getUniqueCategory();
-                        getUniqueBrand(); 
+                        // viewDetailProduct();
+                        // getProducts(2);
+                        // getUniqueCategory();
+                        // getUniqueBrand();
                     ?>
 
                 </div>
