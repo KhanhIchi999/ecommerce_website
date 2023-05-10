@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecommerce website</title>
+    <title>Cart Detail</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
@@ -46,22 +46,13 @@
                         <a class="nav-link" href="display_all.php">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php cartItem()?></sup></a>
+                        <a class="nav-link" href="cart.php"><i
+                                class="fa-solid fa-cart-shopping"></i><sup><?php cartItem()?></sup></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Total Price: <?php total_cart_price()?> $</a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0" method="GET" action="search_product.php">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='search_data'>
-                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
-                </form>
             </div>
         </nav>
 
@@ -90,43 +81,66 @@
         </div>
 
         <!-- main page -->
-        <div class="row py-5 px-3">
-            <div class="col-md-10">
-                <div class="row">
-
-                    <?php
-                        // calling funciton from funtions/common_function.php
-                        getProducts(2);
-                        getUniqueCategory();
-                        getUniqueBrand(); 
-                    ?>
-
-                </div>
+        <div class="container">
+            <form action="" method="POST" class="py-5 px-3">  
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Product Imgae</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Remove</th>
+                            <th scope="col" colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            showCartItem();
+                            removeCartItem(); 
+                        ?>
+                    </tbody>
+                </table>
+            </form>
+            <div>
+                <!-- subtotal -->
+                <h4 class="px-3">Subtotal: <strong class="text-info"><?php total_cart_price() ?>$</strong></h4>
+                <a class="btn btn-primary" href="index.php" role="button">Continue Shopping</a>
+                <a class="btn btn-primary" href="index.php" role="button">Check Out</a>
             </div>
-            <div class="col-md-2">
-                <div class="card bg-secondary">
-                    <div class="card-body">
-                        <h5 class="card-title text-light">Categories</h5>
-                        <ul class="list-group">
-                            <?php
-                                // calling funciton from funtions/common_function.php
-                                getCategories();
 
-                            ?>
-                        </ul>
-                        <h5 class="card-title mt-3 text-light">Brand</h5>
-                        <ul class="list-group">
-                            <?php
-                                // calling funciton from funtions/common_function.php
-                                getBrands();
+            <?php
+                if(isset($_POST['update_cart'])) {
 
-                            ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                    $ip = getIPAddress();
+
+                    foreach ($_POST as $name => $value) {
+                        if (strpos($name, 'quantity_') === 0) {
+
+                            $product_id = substr($name, strlen('quantity_'));
+                            $quantity = $value;
+
+                            // echo "product_id: $product_id";
+                            // echo "quantity: $quantity";
+                            
+                            // update quantity
+                            $sql = "UPDATE  cart_details SET quantity=$quantity WHERE ip_address='$ip' AND product_id='$product_id'";
+                            $result = (mysqli_query($conn, $sql));
+
+                            if (!$result) {
+                                echo "Error updating quantity for product ID $product_id: " . mysqli_error($conn);
+                            }
+                    
+                        }
+                    }
+
+                    // echo "Cart updated successfully";
+                    echo "<script>window.location.href='cart.php';</script>";
+
+                    // xem lại code nha, còn phần tính total price nữa
+                }
+            ?>
         </div>
-
 
         <!-- footer -->
         <?php
@@ -141,7 +155,7 @@
 
 
 
-    
+
 
 
 

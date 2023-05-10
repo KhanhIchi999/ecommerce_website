@@ -405,4 +405,93 @@
 
     }
 
+    function showCartItem() {
+
+        global $conn;
+
+        $ip = getIPAddress();
+        $total = 0;  
+
+        // select all data from the products table where ip_address 
+        $sql = "SELECT * FROM cart_details WHERE ip_address='$ip'";
+        $result = mysqli_query($conn, $sql);
+
+        $result_count = mysqli_num_rows(($result));
+        if($result_count > 0) {
+            // iterate over the rows and calculate the total price
+            while ($row = mysqli_fetch_assoc($result)) {
+    
+                
+                $product_id = $row["product_id"];
+                $quantity = $row["quantity"];
+                
+                $select_product = "SELECT * FROM products WHERE product_id='$product_id'";
+                $result_product = mysqli_query($conn, $select_product);
+                $product = mysqli_fetch_assoc($result_product);
+                
+                $product_name = $product["product_name"];
+                $product_image = $product["product_image"];
+                $price = $product["product_price"];
+                $total += $price * $quantity;
+                
+                echo "
+                    <tr>
+                        <td class='align-middle'>$product_name</td>
+                        <td>
+                            <img src='./admin_area/$product_image' class='' alt=$product_name width='60' height='60'>
+                        </td>
+                        <td class='align-middle'>
+                            <input class='text-center' type='number' name='quantity_$product_id' value='$quantity' min='0' style='width: 50px;'>
+                        </td>
+                        <td class='align-middle'>$total</td>
+                        <td class='align-middle'>
+                            <div class='form-check'>
+                                <input class='form-check-input' type='checkbox' name='remove_item[]' value='$product_id'
+                                >
+                            </div>
+                        </td>
+                        <td class='align-middle'>
+                            <button type='submit' name='update_cart' class='btn btn-danger'>Update</button>
+                        </td>
+                        <td class='align-middle'>
+                            <button type='submit' name='remove_cart' class='btn btn-warning'>Remove</button>
+                        </td>
+                    </tr>
+                    
+                ";    
+    
+            }
+        }else {
+            echo "
+                <tr>
+                    <td class='align-middle text-danger' colspan='6'>No Have Product</td>
+                </tr>
+            ";
+        }
+        
+
+
+    }
+
+    function removeCartItem() {
+
+        global $conn;
+
+        if (isset($_POST['remove_cart'])) {
+            if(isset($_POST['remove_item'])) {
+                foreach($_POST['remove_item'] as $product_id ){
+                    echo $product_id;
+                    $sql = "DELETE FROM cart_details WHERE product_id=$product_id";
+                    $result = mysqli_query($conn, $sql);
+                    if ($result) {
+                        echo "Item removed from cart";
+                        echo "<script>window.open('cart.php', '_self')</script>";
+                    } else {
+                        echo "Error: " . mysqli_error($conn);
+                    }
+                }
+            }
+        }
+
+    }
 ?>
