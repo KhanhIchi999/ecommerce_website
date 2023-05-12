@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cart Detail</title>
+    <title>Checkout</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
@@ -76,70 +76,18 @@
         <!-- title page -->
         <div>
             <h3 class="text-center">Villas Store</h3>
-            <p class="text-center">Sells for passion</p>
-
+            <p class="text-center">Checkout</p>
         </div>
 
         <!-- main page -->
         <div class="container">
-            <form action="" method="POST" class="py-5 px-3">  
-                <table class="table table-bordered text-center">
-                    <thead>
-                        <tr>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Product Imgae</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Total Price</th>
-                            <th scope="col">Remove</th>
-                            <th scope="col" colspan="2">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            showCartItem();
-                            removeCartItem(); 
-                        ?>
-                    </tbody>
-                </table>
-            </form>
-            <div>
-                <!-- subtotal -->
-                <h4 class="px-3">Subtotal: <strong class="text-info"><?php total_cart_price() ?>$</strong></h4>
-                <a class="btn btn-primary" href="index.php" role="button">Continue Shopping</a>
-                <a class="btn btn-primary" href="checkout.php" role="button">Check Out</a>
-            </div>
-
-            <?php
-                if(isset($_POST['update_cart'])) {
-
-                    $ip = getIPAddress();
-
-                    foreach ($_POST as $name => $value) {
-                        if (strpos($name, 'quantity_') === 0) {
-
-                            $product_id = substr($name, strlen('quantity_'));
-                            $quantity = $value;
-
-                            // echo "product_id: $product_id";
-                            // echo "quantity: $quantity";
-                            
-                            // update quantity
-                            $sql = "UPDATE  cart_details SET quantity=$quantity WHERE ip_address='$ip' AND product_id='$product_id'";
-                            $result = (mysqli_query($conn, $sql));
-
-                            if (!$result) {
-                                echo "Error updating quantity for product ID $product_id: " . mysqli_error($conn);
-                            }
-                    
-                        }
-                    }
-
-                    // echo "Cart updated successfully";
-                    echo "<script>window.location.href='cart.php';</script>";
-
-                    // xem lại code nha, còn phần tính total price nữa
+           <?php
+                if(!isset($_SESSION['username'])) {
+                    include('users_area/user_login.php');
+                }else {
+                    include('payment.php');
                 }
-            ?>
+           ?>
         </div>
 
         <!-- footer -->
