@@ -1,7 +1,8 @@
 <?php
+    session_start();
     // connect to database
-     include 'includes/connectDB.php';
-     include 'functions/common_function.php';
+    include_once '../includes/connectDB.php';
+     include_once '../functions/common_function.php';
 ?>
 
 
@@ -40,10 +41,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="../index.php">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="display_all.php">Products</a>
+                        <a class="nav-link" href="../display_all.php">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="cart.php"><i
@@ -68,7 +69,13 @@
                     <a class="nav-link" href="#">Welcome Guest</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <?php
+                        if(!isset($_SESSION['username'])) {
+                            echo "<a class='nav-link' href='user_login.php'>Log in</a>";
+                        }else {
+                            echo "<a class='nav-link' href='user_logout.php'>Log out</a>";
+                        }
+                    ?>
                 </li>
             </ul>
         </nav>
@@ -82,10 +89,11 @@
         <!-- main page -->
         <div class="container">
            <?php
+                
                 if(!isset($_SESSION['username'])) {
-                    include('users_area/user_login.php');
+                    include_once('user_login.php');
                 }else {
-                    include('payment.php');
+                    include_once('payment.php');
                 }
            ?>
         </div>
@@ -93,7 +101,7 @@
         <!-- footer -->
         <?php
             
-            include 'includes/footer.php';
+            include '../includes/footer.php';
 
         ?>
 
@@ -108,8 +116,8 @@
 
 
     <?php
-    // close connect to database
-    mysqli_close($conn);
+        //close connect to database
+        // mysqli_close($conn);
     ?>
 
 

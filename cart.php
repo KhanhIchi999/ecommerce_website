@@ -2,6 +2,8 @@
     // connect to database
      include 'includes/connectDB.php';
      include 'functions/common_function.php';
+
+     session_start();
 ?>
 
 
@@ -65,10 +67,22 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome Guest</a>
+                    <?php
+                        if(!isset($_SESSION['username'])) {
+                            echo "<a class='nav-link' href=''>Welcome Guest</a>";
+                        } else {
+                            echo "<a class='nav-link' href=''>Welcome {$_SESSION['username']}</a>";
+                        }
+                    ?>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <?php
+                        if(!isset($_SESSION['username'])) {
+                            echo "<a class='nav-link' href='users_area/user_login.php'>Log in</a>";
+                        }else {
+                            echo "<a class='nav-link' href='users_area/user_logout.php'>Log out</a>";
+                        }
+                    ?>
                 </li>
             </ul>
         </nav>
@@ -106,7 +120,7 @@
                 <!-- subtotal -->
                 <h4 class="px-3">Subtotal: <strong class="text-info"><?php total_cart_price() ?>$</strong></h4>
                 <a class="btn btn-primary" href="index.php" role="button">Continue Shopping</a>
-                <a class="btn btn-primary" href="checkout.php" role="button">Check Out</a>
+                <a class="btn btn-primary" href="users_area/checkout.php" role="button">Check Out</a>
             </div>
 
             <?php
@@ -151,12 +165,6 @@
 
 
     </div>
-
-
-
-
-
-
 
 
     <?php

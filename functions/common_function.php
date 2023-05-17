@@ -1,7 +1,7 @@
 <?php 
 
     // including connect file
-    include "./includes/connectDB.php";
+    include_once __DIR__ . "/../includes/connectDB.php";
     
     // getting products
     function getProducts($product_number) {

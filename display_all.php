@@ -2,6 +2,8 @@
     // connect to database
      include 'includes/connectDB.php';
      include 'functions/common_function.php';
+
+     session_start();
 ?>
 
 
@@ -46,16 +48,16 @@
                         <a class="nav-link" href="display_all.php">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Register</a>
+                        <a class="nav-link" href="users_area/user_registration.php">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><i class="fa-solid fa-cart-shopping"></i><sup>1</sup></a>
+                        <a class="nav-link" href="cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php cartItem()?></sup></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Total Price</a>
+                        <a class="nav-link" href="#">Total Price: <?php total_cart_price()?> $</a>
                     </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" method="GET" action="search_product.php">
@@ -69,10 +71,22 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome Guest</a>
+                    <?php
+                        if(!isset($_SESSION['username'])) {
+                            echo "<a class='nav-link' href=''>Welcome Guest</a>";
+                        } else {
+                            echo "<a class='nav-link' href=''>Welcome {$_SESSION['username']}</a>";
+                        }
+                    ?>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
+                    <?php
+                        if(!isset($_SESSION['username'])) {
+                            echo "<a class='nav-link' href='users_area/user_login.php'>Log in</a>";
+                        }else {
+                            echo "<a class='nav-link' href='users_area/user_logout.php'>Log out</a>";
+                        }
+                    ?>
                 </li>
             </ul>
         </nav>
