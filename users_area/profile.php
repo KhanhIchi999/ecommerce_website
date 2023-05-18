@@ -1,8 +1,9 @@
 <?php
-    session_start();
     // connect to database
-    include_once '../includes/connectDB.php';
-     include_once '../functions/common_function.php';
+     include '../includes/connectDB.php';
+     include '../functions/common_function.php';
+
+     session_start();
 ?>
 
 
@@ -13,7 +14,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Welcome <?php echo $_SESSION['username']?></title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
@@ -47,13 +48,22 @@
                         <a class="nav-link" href="../display_all.php">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../cart.php"><i
-                                class="fa-solid fa-cart-shopping"></i><sup><?php cartItem()?></sup></a>
+                        <a class="nav-link" href="users_area/user_registration.php">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../cart.php"><i class="fa-solid fa-cart-shopping"></i><sup><?php cartItem()?></sup></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Total Price: <?php total_cart_price()?> $</a>
                     </li>
                 </ul>
+                <form class="form-inline my-2 my-lg-0" method="GET" action="../search_product.php">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name='search_data'>
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+                </form>
             </div>
         </nav>
 
@@ -66,14 +76,20 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Welcome Guest</a>
+                    <?php
+                        if(!isset($_SESSION['username'])) {
+                            echo "<a class='nav-link' href=''>Welcome Guest</a>";
+                        } else {
+                            echo "<a class='nav-link' href=''>Welcome {$_SESSION['username']}</a>";
+                        }
+                    ?>
                 </li>
                 <li class="nav-item">
                     <?php
                         if(!isset($_SESSION['username'])) {
-                            echo "<a class='nav-link' href='user_login.php'>Log in</a>";
+                            echo "<a class='nav-link' href='users_area/user_login.php'>Log in</a>";
                         }else {
-                            echo "<a class='nav-link' href='user_logout.php'>Log out</a>";
+                            echo "<a class='nav-link' href='users_area/user_logout.php'>Log out</a>";
                         }
                     ?>
                 </li>
@@ -83,20 +99,30 @@
         <!-- title page -->
         <div>
             <h3 class="text-center">Villas Store</h3>
-            <p class="text-center">Checkout</p>
+            <p class="text-center">Sells for passion</p>
+
         </div>
 
         <!-- main page -->
-        <div class="container">
-           <?php
-                
-                if(!isset($_SESSION['username'])) {
-                    include_once('user_login.php');
-                }else {
-                    include_once('payment.php');
-                }
-           ?>
+        <div class="row py-5 px-3">
+            <div class="col-md-2 text-center">
+                <h4>Your Profile</h4>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <img src="user_images/khanh.jfif" alt="" class="img-thumbnail">
+                    </li>
+                    <li class="list-group-item">Pending order</li>
+                    <li class="list-group-item">Edit Account</li>
+                    <li class="list-group-item">My Orders</li>
+                    <li class="list-group-item">Delete Account</li>
+                    <li class="list-group-item">Logout</li>
+                </ul>
+            </div>
+            <div class="col-md-10">
+               
+            </div>
         </div>
+
 
         <!-- footer -->
         <?php
@@ -111,13 +137,13 @@
 
 
 
-
+    
 
 
 
     <?php
-        //close connect to database
-        // mysqli_close($conn);
+    // close connect to database
+    mysqli_close($conn);
     ?>
 
 
