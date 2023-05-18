@@ -109,17 +109,39 @@
                 <h4>Your Profile</h4>
                 <ul class="list-group">
                     <li class="list-group-item">
-                        <img src="user_images/khanh.jfif" alt="" class="img-thumbnail">
+                        <?php
+                            if(isset($_SESSION['username'])) {
+                                $user_name = $_SESSION['username'];
+                                $sql = "SELECT * FROM user_table WHERE user_name = '$user_name'";
+                                $result_image = mysqli_query($conn, $sql);
+                                $row = mysqli_fetch_assoc($result_image);
+                                $user_image = $row['user_image'];
+
+                            }
+                        ?>
+                        <img src=<?php echo $user_image?> alt="" class="img-thumbnail">
                     </li>
-                    <li class="list-group-item">Pending order</li>
-                    <li class="list-group-item">Edit Account</li>
-                    <li class="list-group-item">My Orders</li>
-                    <li class="list-group-item">Delete Account</li>
-                    <li class="list-group-item">Logout</li>
+                    <li class="list-group-item">
+                        <a href="profile.php">Pending order</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="profile.php?edit_account">Edit Account</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="profile.php?my_orders">My Orders</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="profile.php?delete_account">Delete Account</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="user_logout.php">Logout</a>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-10">
-               
+               <?php
+                    get_user_order_details(); 
+               ?>
             </div>
         </div>
 

@@ -494,4 +494,30 @@
         }
 
     }
+
+    function get_user_order_details() {
+        global $conn;
+        $username = $_SESSION['username'];
+        $get_details = "SELECT * FROM user_table WHERE user_name = '$username'";
+        $result_query = mysqli_query($conn, $get_details);
+
+        while ($row = mysqli_fetch_assoc($result_query)) {
+            $user_id = $row['user_id'];
+            if(!isset($_GET['edit_account']) && !isset($_GET['my_orders']) && !isset($_GET['delete_account'])) {
+
+                $get_orders = "SELECT * FROM user_orders WHERE user_id = '$user_id' AND order_status = 'pending'";
+                $result_orders_query = mysqli_query($conn, $get_orders);
+                $row_count = mysqli_num_rows(($result_orders_query));
+
+                if($row_count > 0) {
+                    echo "<h3 class='text-center text-success'>You have <span class='text-danger'>$row_count</span> pending order</h3>";
+                    echo "<p class='text-center'><a href='profile.php?my_orders'>Order Details</a></p>";
+                }else {
+                    echo "<h3 class='text-center'>You have zero pending order</h3>";
+                    echo "<p class='text-center'><a href='../index.php'>Explore products</a></p>";
+                }
+            }
+        }
+
+    }
 ?>
