@@ -1,7 +1,7 @@
 <?php
     // connect to database
-     include '../includes/connectDB.php';
-     include '../functions/common_function.php';
+     include_once '../includes/connectDB.php';
+     include_once '../functions/common_function.php';
 
      session_start();
 ?>
@@ -48,7 +48,13 @@
                         <a class="nav-link" href="../display_all.php">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="users_area/user_registration.php">Register</a>
+                        <?php
+                            if(isset($_SESSION['username'])) {
+                                echo "<a class='nav-link' href='profile.php'>My profile</a>";
+                            } else {
+                                echo "<a class='nav-link' href='user_registration.php'>Register</a>";
+                            }
+                        ?>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contact</a>
@@ -87,9 +93,9 @@
                 <li class="nav-item">
                     <?php
                         if(!isset($_SESSION['username'])) {
-                            echo "<a class='nav-link' href='users_area/user_login.php'>Log in</a>";
+                            echo "<a class='nav-link' href='user_login.php'>Log in</a>";
                         }else {
-                            echo "<a class='nav-link' href='users_area/user_logout.php'>Log out</a>";
+                            echo "<a class='nav-link' href='user_logout.php'>Log out</a>";
                         }
                     ?>
                 </li>
@@ -102,7 +108,6 @@
             <p class="text-center">Sells for passion</p>
 
         </div>
-
         <!-- main page -->
         <div class="row py-5 px-3">
             <div class="col-md-2 text-center">
@@ -116,10 +121,9 @@
                                 $result_image = mysqli_query($conn, $sql);
                                 $row = mysqli_fetch_assoc($result_image);
                                 $user_image = $row['user_image'];
-
+                                echo "<img src=$user_image alt='' class='img-thumbnail'>";
                             }
                         ?>
-                        <img src=<?php echo $user_image?> alt="" class="img-thumbnail">
                     </li>
                     <li class="list-group-item">
                         <a href="profile.php">Pending order</a>
@@ -140,7 +144,19 @@
             </div>
             <div class="col-md-10">
                <?php
-                    get_user_order_details(); 
+                    if(isset($_SESSION['username'])){
+                        get_user_order_details();
+                        if(isset($_GET['edit_account'])) {
+                            include_once('edit_account.php');
+                        }
+                        else if(isset($_GET['my_orders'])) {
+                            include_once('user_orders.php');
+                        }
+                        else if(isset($_GET['delete_account'])) {
+                            include_once('delete_account.php');
+                        }
+
+                    }
                ?>
             </div>
         </div>
