@@ -1,3 +1,13 @@
+<?php
+    // connect to database
+     include_once '../includes/connectDB.php';
+     include_once '../functions/common_function.php';
+
+     session_start();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,28 +73,28 @@
                                 <a class="nav-link custom-btn" href="insert_product.php">Insert Products</a>
                             </li>
                             <li class="nav-item text-center">
-                                <a class="nav-link custom-btn" href="#">View Products</a>
+                                <a class="nav-link custom-btn" href="index.php?view_products">View Products</a>
                             </li>
                             <li class="nav-item text-center">
                                 <a class="nav-link custom-btn" href="index.php?insert_category">Insert Categories</a>
                             </li>
                             <li class="nav-item text-center">
-                                <a class="nav-link custom-btn" href="#">View Categories</a>
+                                <a class="nav-link custom-btn" href="index.php?view_categories">View Categories</a>
                             </li>
                             <li class="nav-item text-center">
                                 <a class="nav-link custom-btn" href="index.php?insert_brand">Insert Brands</a>
                             </li>
                             <li class="nav-item text-center">
-                                <a class="nav-link custom-btn" href="#">View Brands</a>
+                                <a class="nav-link custom-btn" href="index.php?view_brands">View Brands</a>
                             </li>
                             <li class="nav-item text-center">
-                                <a class="nav-link custom-btn" href="#">All Orders</a>
+                                <a class="nav-link custom-btn" href="index.php?view_orders">All Orders</a>
                             </li>
                             <li class="nav-item text-center">
-                                <a class="nav-link custom-btn" href="#">All Payments</a>
+                                <a class="nav-link custom-btn" href="index.php?list_payments">All Payments</a>
                             </li>
                             <li class="nav-item text-center">
-                                <a class="nav-link custom-btn" href="#">List Users</a>
+                                <a class="nav-link custom-btn" href="index.php?list_users">List Users</a>
                             </li>
                             <li class="nav-item text-center">
                                 <a class="nav-link custom-btn" href="#">Log Out</a>
@@ -101,9 +111,45 @@
                 if(isset($_GET['insert_category'])) {
                     include('insert_category.php');
                 }
-                if(isset($_GET['insert_brand'])) {
+                else if(isset($_GET['insert_brand'])) {
                     include('insert_brand.php');
-                } 
+                }
+                else if(isset($_GET['view_products'])) {
+                    include('view_products.php');
+                }
+                else if(isset($_GET['edit_products'])) {
+                    include('edit_products.php');
+                }
+                else if(isset($_GET['delete_product'])) {
+                    include('delete_product.php');
+                }
+                else if(isset($_GET['view_categories'])) {
+                    include('view_categories.php');
+                }
+                else if(isset($_GET['edit_category'])) {
+                    include('edit_category.php');
+                }
+                else if(isset($_GET['delete_category'])) {
+                    include('delete_category.php');
+                }
+                else if(isset($_GET['view_brands'])) {
+                    include('view_brands.php');
+                }
+                else if(isset($_GET['edit_brand'])) {
+                    include('edit_brand.php');
+                }
+                else if(isset($_GET['delete_brand'])) {
+                    include('delete_brand.php');
+                }
+                else if(isset($_GET['view_orders'])) {
+                    include('view_orders.php');
+                }
+                else if(isset($_GET['list_payments'])) {
+                    include('list_payments.php');
+                }
+                else if(isset($_GET['list_users'])) {
+                    include('list_users.php');
+                }
             ?>
         </div>
 

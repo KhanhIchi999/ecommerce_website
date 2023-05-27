@@ -24,13 +24,11 @@
                 echo "Error: " . $result_delete_query . "<br>" . mysqli_error($conn);
             }
         }
-
         
     }
     
     if(isset($_POST['dont_delete'])) {
         echo "<script>window.open('profile.php', '_self')</script>";
-
     }
 
 

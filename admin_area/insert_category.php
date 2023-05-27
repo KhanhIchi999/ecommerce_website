@@ -16,15 +16,15 @@
 
         if (mysqli_num_rows($result_check) > 0) {
           echo "<script>alert('Category name already exists!')</script>";
-          header('Refresh: 1; index.php');
+          echo "<script>window.open('index.php?view_categories', '_self')</script>";
         } else {
           // Insert new category into database
           $sql = "INSERT INTO categories (category_name) VALUES ('$category_name')";
           $result = (mysqli_query($conn, $sql));
   
           if ($result) {
-              echo "New category created successfully";
-              // header('Location: index.php?page=user');
+              echo "<script>alert('A new category is created successfully!')</script>";
+              echo "<script>window.open('index.php?view_categories', '_self')</script>";
           } else {
               echo "Error: " . $sql . "<br>" . mysqli_error($conn);
           }
